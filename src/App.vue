@@ -1,47 +1,29 @@
-<script setup lang="ts">
-// import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script setup lang="ts" name="app">
+import useNav from '@/components/useNav.vue'
+import useBanner from './components/useBanner.vue'
+import './css/base.css'
 </script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="common-layout">
+    <el-container>
+      <el-aside width="200px"><useNav /></el-aside>
+      <el-container>
+        <el-header><useBanner /></el-header>
+        <el-main class="body"><RouterView></RouterView></el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
-
 <style scoped>
-header {
-  line-height: 1.5;
+.common-layout {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.body {
+  background-color: antiquewhite;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+* {
+  margin: 0px;
 }
 </style>
