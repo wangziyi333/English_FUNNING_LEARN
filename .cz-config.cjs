@@ -34,6 +34,6 @@
 
   // allowCustomScopes: true,
   // allowBreakingChanges: ['feat', 'fix'],
-  // skipQuestions: ['body', 'breaking', 'footer'],
+  skipQuestions: ['body', 'footer'],
   subjectLimit: 72
 }
