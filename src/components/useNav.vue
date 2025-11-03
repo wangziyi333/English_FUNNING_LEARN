@@ -22,7 +22,6 @@ onMounted(() => {
     text-color="#fff"
     @open="handleOpen"
     @close="handleClose"
-    :router="true"
     :default-active="activeIndex"
   >
     <el-sub-menu index="1">
@@ -30,11 +29,15 @@ onMounted(() => {
         <i class="iconfont icon-kongzhitai"></i>
         <span>控制面板</span>
       </template>
-      <el-menu-item index="1-1" style="font-size: large"
-        ><RouterLink to="/console" active-class="active">主控制台</RouterLink></el-menu-item
+      <el-menu-item style="font-size: large"
+        ><RouterLink to="/console" active-class="active" index="1-1"
+          >主控制台</RouterLink
+        ></el-menu-item
       >
-      <el-menu-item index="1-2" style="font-size: large"
-        ><RouterLink to="/messages" active-class="active">我的消息</RouterLink></el-menu-item
+      <el-menu-item style="font-size: large"
+        ><RouterLink to="/messages" active-class="active" index="1-2"
+          >我的消息</RouterLink
+        ></el-menu-item
       >
     </el-sub-menu>
     <el-sub-menu index="2">
@@ -42,8 +45,10 @@ onMounted(() => {
         <i class="iconfont icon-guanli"></i>
         <span>系统管理</span>
       </template>
-      <el-menu-item index="2-1" style="font-size: large"
-        ><RouterLink to="/user_mag" active-class="active">用户管理</RouterLink></el-menu-item
+      <el-menu-item style="font-size: large"
+        ><RouterLink to="/user_mag" active-class="active" index="2-1"
+          >用户管理</RouterLink
+        ></el-menu-item
       >
     </el-sub-menu>
     <el-sub-menu index="3">
@@ -51,8 +56,10 @@ onMounted(() => {
         <i class="iconfont icon-shuju"></i>
         <span>数据管理</span>
       </template>
-      <el-menu-item index="3-1" style="font-size: large"
-        ><RouterLink to="notice" active-class="active">通知公告</RouterLink></el-menu-item
+      <el-menu-item style="font-size: large"
+        ><RouterLink to="notice" active-class="active" index="3-1"
+          >通知公告</RouterLink
+        ></el-menu-item
       >
     </el-sub-menu>
     <el-sub-menu index="4">
@@ -60,11 +67,13 @@ onMounted(() => {
         <i class="iconfont icon-icon_shezhi"></i>
         <span>系统设置</span>
       </template>
-      <el-menu-item index="4-1" style="font-size: large"
-        ><RouterLink to="/prs_set" active-class="active">个人设置</RouterLink></el-menu-item
+      <el-menu-item style="font-size: large"
+        ><RouterLink to="/prs_set" active-class="active" index="4-1"
+          >个人设置</RouterLink
+        ></el-menu-item
       >
-      <el-menu-item index="4-2" style="font-size: large"
-        ><RouterLink to="/sys_set" active-class="active">系统设置</RouterLink>
+      <el-menu-item style="font-size: large"
+        ><RouterLink to="/sys_set" active-class="active" index="4-2">系统设置</RouterLink>
       </el-menu-item>
     </el-sub-menu>
   </el-menu>
