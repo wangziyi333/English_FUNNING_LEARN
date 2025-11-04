@@ -16,7 +16,17 @@
         <el-table-column property="state" label="消息状态" width="240" show-overflow-tooltip />
         <el-table-column property="creater" label="创建人" />
         <el-table-column property="time" label="创建时间" />
-        <el-table-column property="operation" label="操作" />
+        <el-table-column label="操作">
+          <template #default="scope">
+            <el-button type="primary" @click="handleConfirm(scope.$index, scope.row)"
+              >确认</el-button
+            >
+            <el-button type="warning" @click="handleDetail(scope.$index, scope.row)"
+              >详情</el-button
+            >
+            <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <!-- 底部页数调节 -->
@@ -43,13 +53,11 @@ import { useNameStore } from '@/store/nameStore'
 import { ref } from 'vue'
 import type { ComponentSize } from 'element-plus'
 // import { reactive } from 'vue'
-
 //分页参数
 // const paginationData = reactive({
 //   pageNum: 1,
 //   pageSize: 10
 // })
-
 const currentPage3 = ref(5)
 const pageSize3 = ref(100)
 const size = ref<ComponentSize>('default')
@@ -73,7 +81,6 @@ interface User {
   state: string
   creater: string
   time: string
-  operation: string
 }
 // interface TableData<T> {
 //   list: T[][]
@@ -87,34 +94,42 @@ const tableData: User[] = [
     name: '通知',
     state: '未读',
     creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    time: '2025-11-3'
   },
   {
     ID: '2',
     name: '通知',
     state: '未读',
     creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    time: '2025-11-3'
   },
   {
     ID: '3',
     name: '通知',
     state: '未读',
     creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    time: '2025-11-3'
   },
   {
     ID: '4',
     name: '通知',
     state: '未读',
     creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    time: '2025-11-3'
   }
 ]
+// 处理操作按钮点击事件
+const handleConfirm = (index: number, row: User) => {
+  console.log('确认:', index, row)
+}
+
+const handleDetail = (index: number, row: User) => {
+  console.log('详情:', index, row)
+}
+
+const handleDelete = (index: number, row: User) => {
+  console.log('删除:', index, row)
+}
 </script>
 <style scoped>
 .up_button {

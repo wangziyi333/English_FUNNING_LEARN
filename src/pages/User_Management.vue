@@ -3,20 +3,30 @@
     <div class="main">
       <!-- 顶部按钮 -->
       <div class="up_button">
-        <el-button type="primary" size="large">批量确认</el-button>
+        <el-button type="primary" size="large">批量私信</el-button>
         <el-button type="danger" size="large" disabled>删除</el-button>
       </div>
       <!-- 消息列表 -->
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="selection" width="55" />
-        <el-table-column label="ID" width="120">
+        <el-table-column label="ID" width="180">
           <template #default="scope">{{ scope.row.ID }}</template>
         </el-table-column>
-        <el-table-column property="name" label="消息题目" width="120" />
-        <el-table-column property="state" label="消息状态" width="240" show-overflow-tooltip />
-        <el-table-column property="creater" label="创建人" />
-        <el-table-column property="time" label="创建时间" />
-        <el-table-column property="operation" label="操作" />
+        <el-table-column property="name" label="用户昵称" width="200" />
+        <el-table-column property="phone" label="手机号" width="200" />
+        <el-table-column property="state" label="登录状态" width="200" show-overflow-tooltip />
+        <el-table-column property="time" label="注册时间" />
+        <el-table-column property="operation" label="操作">
+          <template #default="scope">
+            <el-button type="primary" @click="privateMessage(scope.$index, scope.row)"
+              >私信</el-button
+            >
+            <el-button type="warning" @click="handleChange(scope.$index, scope.row)"
+              >编辑</el-button
+            >
+            <el-button type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <!-- 底部页数调节 -->
@@ -42,10 +52,12 @@
 import { useNameStore } from '@/store/nameStore'
 import { ref } from 'vue'
 import type { ComponentSize } from 'element-plus'
+import { customAlphabet } from 'nanoid'
 const { user_management, Breadcrumbs, sys_management } = useNameStore()
 Breadcrumbs[0] = sys_management
 Breadcrumbs[1] = user_management
 
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 10)
 const currentPage3 = ref(5)
 const pageSize3 = ref(100)
 const size = ref<ComponentSize>('default')
@@ -61,12 +73,11 @@ const handleCurrentChange = (val: number) => {
 //消息列表
 //  添加接口约束
 interface User {
-  ID: string
+  ID: string | boolean
   name: string
   state: string
-  creater: string
+  phone: number
   time: string
-  operation: string
 }
 // interface TableData<T> {
 //   list: T[][]
@@ -76,38 +87,43 @@ interface User {
 //消息列表数据
 const tableData: User[] = [
   {
-    ID: '1',
-    name: '通知',
-    state: '未读',
-    creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    ID: nanoid(),
+    name: '哈基米',
+    state: '离线',
+    phone: 17532026666,
+    time: '2025-11-1'
   },
   {
-    ID: '2',
-    name: '通知',
-    state: '未读',
-    creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    ID: nanoid(),
+    name: '小侯同学',
+    state: '在线',
+    phone: 18732006666,
+    time: '2025-11-1'
   },
   {
-    ID: '3',
-    name: '通知',
-    state: '未读',
-    creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    ID: nanoid(),
+    name: '圆子',
+    state: '在线',
+    phone: 13730546666,
+    time: '2025-11-2'
   },
   {
-    ID: '4',
-    name: '通知',
-    state: '未读',
-    creater: 'WangZiyi',
-    time: '2025-11-3',
-    operation: ''
+    ID: nanoid(),
+    name: '小小',
+    state: '离线',
+    phone: 18833006666,
+    time: '2025-11-3'
   }
 ]
+const privateMessage = (index: number, row: User) => {
+  console.log('私信', index, row)
+}
+const handleChange = (index: number, row: User) => {
+  console.log('编辑', index, row)
+}
+const handleDelete = (index: number, row: User) => {
+  console.log('删除', index, row)
+}
 </script>
 <style scoped>
 .up_button {
