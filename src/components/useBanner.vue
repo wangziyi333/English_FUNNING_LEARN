@@ -1,11 +1,8 @@
 <template>
   <div class="banner">
     <el-breadcrumb class="banner-left" separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-      <el-breadcrumb-item>
-        <a href="/">promotion management</a>
-      </el-breadcrumb-item>
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ Breadcrumbs[0] }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ Breadcrumbs[1] }} </el-breadcrumb-item>
     </el-breadcrumb>
     <div class="banner-right">
       <span class="iconfont icon-sousuo"></span>
@@ -21,7 +18,10 @@
     </div>
   </div>
 </template>
-<script setup lang="ts" name="myBanner"></script>
+<script setup lang="ts" name="myBanner">
+import { useNameStore } from '@/store/nameStore'
+const { Breadcrumbs } = useNameStore()
+</script>
 <style>
 .banner {
   justify-content: space-between;

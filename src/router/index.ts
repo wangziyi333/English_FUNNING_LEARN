@@ -9,6 +9,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/console', component: mainConsole },
+    { path: '/', redirect: '/console' },
     { path: '/messages', component: Msg },
     { path: '/notice', component: Notice },
     { path: '/prs_set', component: Personal_Settings },

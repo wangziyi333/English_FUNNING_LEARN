@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3877915",
+      "name": "书",
+      "font_class": "shu",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "5482974",
+      "name": "书",
+      "font_class": "shu1",
+      "unicode": "e68f",
+      "unicode_decimal": 59023
+    },
+    {
+      "icon_id": "5483528",
+      "name": "书",
+      "font_class": "shu2",
+      "unicode": "e6f6",
+      "unicode_decimal": 59126
+    },
+    {
+      "icon_id": "6085795",
+      "name": "书",
+      "font_class": "shu3",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "19449146",
+      "name": "书",
+      "font_class": "shu4",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
       "icon_id": "32340614",
       "name": "通知铃铛",
       "font_class": "tongzhilingdang",
