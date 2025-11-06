@@ -1,29 +1,17 @@
 <script setup lang="ts" name="app">
-import useNav from '@/components/useNav.vue'
-import useBanner from './components/useBanner.vue'
-import './css/base.css'
+import myLogin from './pages/myLogin.vue'
 </script>
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-aside width="200px"><useNav /></el-aside>
-      <el-container>
-        <el-header><useBanner /></el-header>
-        <el-main class="body"><RouterView></RouterView></el-main>
-      </el-container>
-    </el-container>
-  </div>
+  <myLogin />
 </template>
-<style scoped>
-.common-layout {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
-.body {
-  background-color: antiquewhite;
-}
+<style>
 * {
-  margin: 0px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#app {
+  width: 100%;
+  height: 100hv;
 }
 </style>
