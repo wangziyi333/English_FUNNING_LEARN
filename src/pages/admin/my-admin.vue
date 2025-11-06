@@ -1,7 +1,6 @@
 <script setup lang="ts" name="my-admin">
 import useNav from '@/components/UseNav.vue'
 import useBanner from '@/components/UseBanner.vue'
-import './css/base.css'
 </script>
 <template>
   <div class="common-layout">

@@ -5,8 +5,8 @@ import Notice from '@/pages/admin/views/myNotice.vue'
 import Personal_Settings from '@/pages/admin/views/Personal_Settings.vue'
 import System_Settings from '@/pages/admin/views/System_Settings.vue'
 import User_Management from '@/pages/admin/views/User_Management.vue'
-import MyLogin from '@/pages/myLogin.vue'
-import Home from '@/pages/user/home.vue'
+// import MyLogin from '@/pages/myLogin.vue'
+import myHome from '@/pages/user/my-home.vue'
 import MyAdmin from '@/pages/admin/my-admin.vue'
 const router = createRouter({
   history: createWebHistory(),
@@ -18,10 +18,11 @@ const router = createRouter({
     { path: '/prs_set', component: Personal_Settings, meta: { title: '个人设置' } },
     { path: '/sys_set', component: System_Settings, meta: { title: '系统设置' } },
     { path: '/user_mag', component: User_Management, meta: { title: '用户管理' } },
-    { path: '/login', component: MyLogin, meta: { title: '登录' } },
+    //存在循环依赖问题，采用懒加载
+    { path: '/login', component: () => import('@/pages/myLogin.vue'), meta: { title: '登录' } },
     {
       path: '/home',
-      component: Home,
+      component: myHome,
       meta: {
         title: '首页',
         requiresAuth: true

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
-//实例axios
+// 实例axios
 const service = axios.create({
   baseURL: import.meta.env.BITE_API_BASE_URL || '/api',
   timeout: 10000
@@ -27,15 +27,15 @@ service.interceptors.response.use(
         localStorage.removeItem('userInfo')
         router.push('/login')
       }
-      return Promise.reject(new error(res.message || 'Error'))
+      return Promise.reject(new Error(res.message || 'Error'))
     }
     return res
   },
   (error) => {
     console.error('响应错误', error)
     let message = '请求失败'
-    if (res.response) {
-      switch (res.response.status) {
+    if (error.response) {
+      switch (error.response.status) {
         case 401:
           message = '未授权，请重新登录'
           localStorage.clear()

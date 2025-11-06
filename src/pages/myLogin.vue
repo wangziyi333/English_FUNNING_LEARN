@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-card class="login-card">
       <h2>系统登陆</h2>
-      <el-form :model="loginForm" :rules="rules">
+      <el-form :model="loginForm" :rules="rules" ref="loginFormRef">
         <el-form-item prop="username"
           ><el-input v-model="loginForm.username" placeholder="请输入用户名" />
         </el-form-item>
@@ -10,7 +10,7 @@
           ><el-input v-model="loginForm.password" type="password" placeholder="请输入密码" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleLogin">登录</el-button>
+          <el-button type="primary" @click="handleLogin" :loading="loading">登录</el-button>
           <el-button>重置</el-button>
           <el-button>注册</el-button>
         </el-form-item>
@@ -20,18 +20,22 @@
 </template>
 <script lang="ts" setup name="myLogin">
 import { ref, reactive } from 'vue'
-import { login } from '@/api/user'
+// @ts-expect-error 不管怎么修改后面引入还是报错
+import { login } from '../api/user'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
-
+const loginFormRef = ref()
+const loading = ref(false)
 const router = useRouter()
 const loginForm = reactive({ username: '', password: '' })
 const rules = {
-  username: [{ request: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ request: true, message: '请输入密码', trigger: 'blur' }]
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
 const handleLogin = async () => {
   try {
+    await loginFormRef.value.validate()
+    loading.value = true
     const res = await login(loginForm)
     localStorage.setItem('token', res.data.token)
     localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
@@ -44,8 +48,10 @@ const handleLogin = async () => {
       ElMessage.success('登录成功！')
     }
   } catch (error) {
-    ElMessage.error(error.message || '登录失败')
+    if (error instanceof Error) ElMessage.error(error.message)
+    else ElMessage.error('登录失败')
   } finally {
+    loading.value = false
   }
 }
 </script>
