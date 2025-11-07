@@ -6,15 +6,15 @@
     </el-breadcrumb>
     <div class="banner-right">
       <span class="iconfont icon-sousuo"></span>
-      <RouterLink to="/notice" class="iconfont icon-tongzhilingdang"></RouterLink>
+      <RouterLink to="/admin/notice" class="iconfont icon-tongzhilingdang"></RouterLink>
       <div class="demo-type">
-        <RouterLink to="./prs_set"
+        <RouterLink to="/admin/prs_set"
           ><el-avatar
             class="iconfont"
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         /></RouterLink>
       </div>
-      <RouterLink to="/prs_set" class="iconfont icon-icon_shezhi"></RouterLink>
+      <RouterLink to="/admin/prs_set" class="iconfont icon-icon_shezhi"></RouterLink>
     </div>
   </div>
 </template>

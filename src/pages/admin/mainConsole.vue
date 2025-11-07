@@ -54,7 +54,7 @@
 <script lang="ts" name="Console" setup>
 import { useNameStore } from '@/store/nameStore'
 import { CaretTop, Warning } from '@element-plus/icons-vue'
-import useChart from '@/components/useChart.vue'
+import useChart from '@/components/UseChart.vue'
 const { mainConsole, Breadcrumbs, Control_Panel } = useNameStore()
 Breadcrumbs[0] = Control_Panel
 Breadcrumbs[1] = mainConsole

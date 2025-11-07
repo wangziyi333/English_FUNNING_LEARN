@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import router from '@/router'
 // 实例axios
 const service = axios.create({
-  baseURL: import.meta.env.BITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.BITE_API_BASE_URL || 'http://localhost:3000',
   timeout: 10000
 })
 service.interceptors.request.use(

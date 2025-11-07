@@ -23,21 +23,23 @@ const users = [
     username: 'admin',
     password: bcrypt.hashSync('123456', 10),
     email: 'admin@example.com',
-    avatar: 'https://avatars.githubusercontent.com/u/1?v=4'
+    avatar: 'https://avatars.githubusercontent.com/u/1?v=4',
+    role: 'admin'
   },
   {
     id: 2,
     username: 'test',
     password: bcrypt.hashSync('123456', 10),
     email: 'test@example.com',
-    avatar: 'https://avatars.githubusercontent.com/u/2?v=4'
+    avatar: 'https://avatars.githubusercontent.com/u/2?v=4',
+    role: 'user'
   }
 ]
 
 // ============================================
 // 登录接口
 // ============================================
-app.post('/api/login', (req, res) => {
+app.post('/user/login', (req, res) => {
   const { username, password } = req.body
 
   if (!username || !password) {
@@ -75,11 +77,12 @@ app.post('/api/login', (req, res) => {
     message: '登录成功',
     data: {
       token,
-      user: {
+      userInfo: {
         id: user.id,
         username: user.username,
         email: user.email,
-        avatar: user.avatar
+        avatar: user.avatar,
+        role: user.role
       }
     }
   })
@@ -88,7 +91,7 @@ app.post('/api/login', (req, res) => {
 // ============================================
 // 获取用户信息接口
 // ============================================
-app.get('/api/user/info', (req, res) => {
+app.get('/user/info', (req, res) => {
   const token = req.headers.authorization?.replace('Bearer ', '')
 
   if (!token) {
@@ -118,7 +121,8 @@ app.get('/api/user/info', (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        avatar: user.avatar
+        avatar: user.avatar,
+        role: user.role
       }
     })
   } catch (error) {
@@ -135,7 +139,7 @@ app.get('/api/user/info', (req, res) => {
 // ============================================
 // 登出接口
 // ============================================
-app.post('/api/logout', (req, res) => {
+app.post('/user/logout', (req, res) => {
   res.json({
     code: 200,
     message: '登出成功',
@@ -146,7 +150,7 @@ app.post('/api/logout', (req, res) => {
 // ============================================
 // 注册接口
 // ============================================
-app.post('/api/register', (req, res) => {
+app.post('/user/register', (req, res) => {
   const { username, password, email } = req.body
 
   if (!username || !password) {
@@ -191,7 +195,7 @@ app.post('/api/register', (req, res) => {
 // ============================================
 // 测试接口
 // ============================================
-app.get('/api/test', (req, res) => {
+app.get('/user/test', (req, res) => {
   res.json({
     code: 200,
     message: '后端服务正常运行',
@@ -211,7 +215,7 @@ app.listen(PORT, () => {
   🚀 后端服务启动成功！
   ========================================
   服务地址: http://localhost:${PORT}
-  测试接口: http://localhost:${PORT}/api/test
+  测试接口: http://localhost:${PORT}/user/test
 
   测试账号:
   - 用户名: admin  密码: 123456

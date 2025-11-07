@@ -20,7 +20,6 @@
 </template>
 <script lang="ts" setup name="myLogin">
 import { ref, reactive } from 'vue'
-// @ts-expect-error 不管怎么修改后面引入还是报错
 import { login } from '../api/user'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
@@ -41,7 +40,7 @@ const handleLogin = async () => {
     localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
     const role = res.data.userInfo.role
     if (role === 'admin') {
-      router.push('/admin/dashboard')
+      router.push('/admin')
       ElMessage.success('欢迎管理员！')
     } else {
       router.push('/home')

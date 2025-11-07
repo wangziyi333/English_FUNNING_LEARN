@@ -41,12 +41,12 @@ onMounted(() => {
         <span>{{ Control_Panel }}</span>
       </template>
       <el-menu-item style="font-size: large"
-        ><RouterLink to="/console" active-class="active" index="1-1">{{
+        ><RouterLink to="/admin/console" active-class="active" index="1-1">{{
           mainConsole
         }}</RouterLink></el-menu-item
       >
       <el-menu-item style="font-size: large"
-        ><RouterLink to="/messages" active-class="active" index="1-2">{{
+        ><RouterLink to="/admin/messages" active-class="active" index="1-2">{{
           messages
         }}</RouterLink></el-menu-item
       >
@@ -57,7 +57,7 @@ onMounted(() => {
         <span>{{ sys_management }}</span>
       </template>
       <el-menu-item style="font-size: large"
-        ><RouterLink to="/user_mag" active-class="active" index="2-1">{{
+        ><RouterLink to="/admin/user_mag" active-class="active" index="2-1">{{
           user_management
         }}</RouterLink></el-menu-item
       >
@@ -68,7 +68,7 @@ onMounted(() => {
         <span>{{ data_management }}</span>
       </template>
       <el-menu-item style="font-size: large"
-        ><RouterLink to="/notice" active-class="active" index="3-1">{{
+        ><RouterLink to="/admin/notice" active-class="active" index="3-1">{{
           notice
         }}</RouterLink></el-menu-item
       >
@@ -79,12 +79,14 @@ onMounted(() => {
         <span>{{ sys_settings }}</span>
       </template>
       <el-menu-item style="font-size: large"
-        ><RouterLink to="/prs_set" active-class="active" index="4-1">{{
+        ><RouterLink to="/admin/prs_set" active-class="active" index="4-1">{{
           prs_settings
         }}</RouterLink></el-menu-item
       >
       <el-menu-item style="font-size: large"
-        ><RouterLink to="/sys_set" active-class="active" index="4-2">{{ sys_settings }}</RouterLink>
+        ><RouterLink to="/admin/sys_set" active-class="active" index="4-2">{{
+          sys_settings
+        }}</RouterLink>
       </el-menu-item>
     </el-sub-menu>
   </el-menu>
