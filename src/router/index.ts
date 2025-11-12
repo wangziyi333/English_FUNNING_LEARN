@@ -7,11 +7,13 @@ import Personal_Settings from '@/pages/admin/Personal_Settings.vue'
 import System_Settings from '@/pages/admin/System_Settings.vue'
 import User_Management from '@/pages/admin/User_Management.vue'
 // import MyLogin from '@/pages/myLogin.vue'
-import myHome from '@/pages/user/my-home.vue'
+import User_Home from '@/pages/user/user_.vue'
 import Memorize_ from '@/pages/user/views/memorize_.vue'
 import Home_ from '@/pages/user/views/home_.vue'
 import Reading_ from '@/pages/user/views/reading_.vue'
 import Recite_ from '@/pages/user/views/recite_.vue'
+import More_reading from '@/pages/user/views/more_reading.vue'
+import Personal_center from '@/pages/user/views/personal_center.vue'
 // import MyAdmin from '@/pages/admin/my-admin.vue'
 const router = createRouter({
   history: createWebHistory(),
@@ -21,18 +23,20 @@ const router = createRouter({
     //存在循环依赖问题，采用懒加载
     { path: '/login', component: () => import('@/pages/myLogin.vue'), meta: { title: '登录' } },
     {
-      path: '/home',
-      component: myHome,
+      path: '/user',
+      component: User_Home,
       meta: {
         title: '首页',
         requiresAuth: true
       },
-      redirect: '/home/home',
+      redirect: '/user/home',
       children: [
         { path: 'home', component: Home_, meta: { title: '首页' } },
         { path: 'memorize', component: Memorize_, meta: { title: '逻辑记忆' } },
         { path: 'reading', component: Reading_, meta: { title: '阅读' } },
-        { path: 'recite', component: Recite_, meta: { title: '背诵' } }
+        { path: 'recite', component: Recite_, meta: { title: '背诵' } },
+        { path: 'more_reading', component: More_reading, meta: { title: '文章合集' } },
+        { path: 'personal_center', component: Personal_center, meta: { title: '个人中心' } }
       ]
     },
     {

@@ -43,7 +43,7 @@ const handleLogin = async () => {
       router.push('/admin')
       ElMessage.success('欢迎管理员！')
     } else {
-      router.push('/home')
+      router.push('/user')
       ElMessage.success('登录成功！')
     }
   } catch (error) {

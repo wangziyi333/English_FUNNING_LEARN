@@ -4,14 +4,14 @@
       <el-container>
         <el-header height="60px"><Use_userBanner /></el-header>
         <el-container>
-          <el-aside width="200px"><Use_userAside /></el-aside>
+          <el-aside width="22vw"><Use_userAside /></el-aside>
           <el-main><RouterView /></el-main>
         </el-container>
       </el-container>
     </div>
   </div>
 </template>
-<script lang="ts" name="my-home" setup>
+<script lang="ts" name="user_" setup>
 import { ref, onMounted } from 'vue'
 // import { useRouter } from 'vue-router'
 import { RouterView } from 'vue-router'

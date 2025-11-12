@@ -13,7 +13,9 @@
         <span class="iconfont icon-xiala-"></span>
       </div>
       <div class="user">
-        <a href="./user.html"><span class="iconfont icon-gerenfill"></span></a>
+        <RouterLink to="/home/personal_center"
+          ><span class="iconfont icon-gerenfill"></span
+        ></RouterLink>
       </div>
     </div>
   </div>

@@ -1,6 +1,10 @@
-<script setup lang="ts" name="app"></script>
+<script setup lang="ts" name="app">
+import dictionary from './data/dictionary_CET6.json'
+import storys from './data/story.json'
+const wordList = dictionary.words
+</script>
 <template>
-  <router-view />
+  <router-view :words="wordList" :storys />
 </template>
 <style>
 * {
