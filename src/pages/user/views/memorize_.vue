@@ -6,14 +6,14 @@
       <div class="left_"><span class="iconfont icon-brain-2-fill"></span></div>
       <div class="right_">
         <h2>
-          单词：<span>{{ word }}</span>
+          单词：<span>{{ currentWord.word }}</span>
         </h2>
         <p class="meaning">
-          词义：<span>{{ translation }}</span>
+          词义：<span>{{ currentWord.translation }}</span>
         </p>
         <div class="skill">
           <p>
-            <strong>记忆技巧：</strong><span>{{ memoryTip }}</span>
+            <strong>记忆技巧：</strong><span>{{ currentWord.memoryTip }}</span>
           </p>
         </div>
         <p class="example-sentence">
@@ -23,36 +23,79 @@
         </p>
       </div>
     </div>
-    <el-card class="card">
-      <strong>{{ word }}</strong>
-      <p>{{ soundmark }}</p>
-      <span class="iconfont icon-laba-xianxing"></span>
-    </el-card>
-    <div class="reading">
-      <RouterLink to="/user/reading">
-        <h3>阅读文章</h3>
-      </RouterLink>
+    <div class="card_container">
+      <el-card v-if="currentIndex > 0" @click="prevWord" shadow="hover" class="toggle"
+        ><strong>上一个</strong></el-card
+      >
+      <el-card class="card">
+        <strong>{{ currentWord.word }}</strong>
+        <p>{{ currentWord.soundmark }}</p>
+        <span class="iconfont icon-laba-xianxing"></span>
+      </el-card>
+      <el-card v-if="currentIndex < 10" @click="nextWord" shadow="hover" class="toggle"
+        ><strong>下一个</strong></el-card
+      >
+      <el-card v-else @click="beginRecite" shadow="hover" class="toggle"
+        ><strong>开始背诵</strong></el-card
+      >
     </div>
+
+    <!-- <div class="toggle">
+      <div @click="prevWord">上一个</div>
+      <div @click="nextWord">下一个</div>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts" name="memorize_">
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
 import { useWordStore } from '@/store/dataStore'
-const { words } = useWordStore()
+const { words, recite_wordList } = useWordStore()
+//清空元素
+recite_wordList.splice(0, recite_wordList.length)
 const currentIndex = ref(0)
-const currentWord = words[currentIndex.value] || {
-  word: '',
-  soundmark: '',
-  translation: '',
-  memoryTip: ''
+const router = useRouter()
+const currentWord = computed(
+  () =>
+    words[currentIndex.value] || {
+      word: '',
+      soundmark: '',
+      translation: '',
+      memoryTip: ''
+    }
+)
+recite_wordList.push({
+  word: currentWord.value.word,
+  soundmark: currentWord.value.soundmark,
+  translation: currentWord.value.translation
+})
+function beginRecite() {
+  router.push('/user/recite')
 }
-const word = currentWord.word
-const translation = currentWord.translation
-const memoryTip = currentWord.memoryTip
-const soundmark = currentWord.soundmark
+function nextWord() {
+  if (currentIndex.value < 10) {
+    currentIndex.value += 1
+    const word = currentWord.value.word
+    const soundmark = currentWord.value.soundmark
+    const translation = currentWord.value.translation
+    if (
+      recite_wordList.indexOf({
+        word: currentWord.value.word,
+        soundmark: currentWord.value.soundmark,
+        translation: currentWord.value.translation
+      }) !== 1
+    )
+      recite_wordList.push({ word, soundmark, translation })
+  }
+}
+function prevWord() {
+  if (currentIndex.value > 0) currentIndex.value -= 1
+}
 </script>
 <style scoped>
+div {
+  cursor: default;
+}
 .container {
   padding: 1% 2%;
 }
@@ -95,7 +138,23 @@ const soundmark = currentWord.soundmark
   background-color: #fdfce8;
   border-left: 5px solid #e2b200;
   padding: 1.5% 3%;
-  margin-bottom: 1%;
+  margin: 1.5% 0px;
+}
+.card_container {
+  display: flex;
+  align-items: center;
+}
+.toggle {
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #508df7;
+  color: #fff;
+  width: 10%;
+  text-align: center;
+  margin: 7%;
+}
+.toggle strong {
+  font-size: 19px;
 }
 .card {
   width: 50%;
@@ -124,9 +183,9 @@ const soundmark = currentWord.soundmark
   background-color: #78abfa;
   font-size: 25px;
   padding: 5px;
-  margin: 1% auto;
+  margin: 3% auto;
 }
-.container .reading {
+/* .container .reading {
   display: block;
   width: 11%;
   background-color: #4782f8;
@@ -135,9 +194,5 @@ const soundmark = currentWord.soundmark
   line-height: 330%;
   font-weight: 400;
   margin: 2% auto;
-}
-.reading h3 {
-  font-size: 19px;
-  color: #fff;
-}
+} */
 </style>

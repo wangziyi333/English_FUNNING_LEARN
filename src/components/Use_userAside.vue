@@ -55,6 +55,9 @@ onMounted(() => {
 })
 </script>
 <style scoped>
+div {
+  cursor: default;
+}
 .container {
   padding: 20px;
   background-color: #fff;

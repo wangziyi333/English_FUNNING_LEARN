@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <RouterLink to="/home/home"
+    <RouterLink to="/user/home"
       ><div class="logo">
         <span class="iconfont icon-shuba"></span>
         <h1>FUNNING LEARN</h1>
@@ -13,7 +13,7 @@
         <span class="iconfont icon-xiala-"></span>
       </div>
       <div class="user">
-        <RouterLink to="/home/personal_center"
+        <RouterLink to="/user/personal_center"
           ><span class="iconfont icon-gerenfill"></span
         ></RouterLink>
       </div>
@@ -24,6 +24,9 @@
 import { RouterLink } from 'vue-router'
 </script>
 <style scoped>
+div {
+  cursor: default;
+}
 .header {
   height: 100%;
   border-bottom: 3px solid #f4f4f4;
@@ -35,6 +38,7 @@ import { RouterLink } from 'vue-router'
 .header .logo {
   display: flex;
   line-height: 60px;
+  cursor: pointer;
 }
 .logo span,
 .logo h1 {
@@ -72,6 +76,7 @@ import { RouterLink } from 'vue-router'
 }
 .header .dictionaries .icon-xiala- {
   font-size: 25px;
+  cursor: pointer;
 }
 .header .icon-gerenfill {
   font-size: 45px;

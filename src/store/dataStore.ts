@@ -4,11 +4,18 @@ import allStorys from '@/data/story.json'
 import type { Word } from '@/types/index'
 const words = dictionary.words
 const storys = allStorys.storys
+type recite = {
+  word: string
+  soundmark: string
+  example?: string
+  translation: string
+}
 export const useWordStore = defineStore('word', {
   actions: {},
   state() {
     return {
-      words: words as Word[]
+      words: words as Word[],
+      recite_wordList: [] as recite[]
     }
   },
   getters: {}
