@@ -4,16 +4,13 @@
       <h2>学习进度</h2>
       <h3>
         <span>当前词典：<span class="cidian">英语六级词典</span></span
-        ><span
-          ><span class="progress">{{ (progressHad / all) * 100 }}</span
-          >%</span
-        >
+        ><span class="progress">{{ progressHad }}/{{ words.length }}</span>
       </h3>
       <div class="progress-bar"><div class="progress-had-bar"></div></div>
       <h3>
         <span>今日进度</span
         ><span class="daily-progress"
-          ><span class="daily-now">{{ progressDailyHad }}</span
+          ><span class="daily-now">{{ learnedDailyWords.length }}</span
           >/<span class="daily-all">{{ dailyGoal }}</span>
         </span>
       </h3>
@@ -23,7 +20,7 @@
       <h2>阅读文章</h2>
       <p>暂无</p>
       <div>
-        <RouterLink to="/home/more_reading"
+        <RouterLink to="/user/more_reading"
           ><span>查看更多</span><span class="iconfont icon-zhankai"></span
         ></RouterLink>
       </div>
@@ -31,27 +28,55 @@
   </div>
 </template>
 <script setup lang="ts" name="Usebanner">
-// import { useStoryStore, useWordStore } from '@/store/dataStore'
-import { ref } from 'vue'
+import { useWordStore } from '@/store/dataStore'
+import { reactive, ref } from 'vue'
 import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import wordsDB from '@/utils/db'
+import storysDB from '@/utils/storyDB'
 // const { words } = useWordStore()
 // const { storys } = useStoryStore()
-const progressHad = ref(390)
-const all = ref(1000)
-const progressDailyHad = ref(2)
-const dailyGoal = ref(10)
-onMounted(() => {
+localStorage.setItem('date', JSON.stringify(new Date().toISOString().split('T')[0]))
+const today = new Date().toISOString().split('T')[0]
+const date = localStorage.getItem('date')
+const { words, dailyGoal, learnedDailyWords, clear_learnedDailyWords } = useWordStore()
+const defaultWord = {
+  id: '',
+  word: ''
+}
+async function useStoryDB() {
+  const storysAll = storysDB.getAllStorys()
+  const faceStorys = ref([])
+  for (let i = 0; i < 5; i++) {
+    faceStorys.value.push(storysAll[i])
+  }
+}
+const progressHad = ref()
+async function useDB() {
+  await wordsDB.init()
+  wordsDB.saveWord(words[0] || defaultWord)
+  const learnedWords = await wordsDB.getAllWords()
+  if (date !== today || date === null) {
+    localStorage.setItem('date', JSON.stringify(today))
+    clear_learnedDailyWords()
+  }
+  progressHad.value = learnedWords.length
   const phb = document.querySelector('.progress-had-bar')
   const dphb = document.querySelector('.daily-progress-had-bar')
   if (phb instanceof HTMLElement) {
-    const width = (progressHad.value / all.value) * 100
+    const width = progressHad.value / words.length
+    console.log(progressHad.value)
+    console.log(words.length)
+    console.log(width)
     phb.style.width = `${width}%`
   }
   if (dphb instanceof HTMLElement) {
-    const width = (progressDailyHad.value / dailyGoal.value) * 100
+    const width = (learnedDailyWords.length / dailyGoal) * 100
     dphb.style.width = `${width}%`
   }
+}
+onMounted(() => {
+  useDB()
 })
 </script>
 <style scoped>

@@ -40,7 +40,6 @@ onMounted(() => {
           beginAtZero: true
         }
       },
-
       plugins: {
         legend: {
           labels: {

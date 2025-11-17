@@ -58,6 +58,7 @@ const router = useRouter()
 const currentWord = computed(
   () =>
     words[currentIndex.value] || {
+      id: 0,
       word: '',
       soundmark: '',
       translation: '',
@@ -67,7 +68,8 @@ const currentWord = computed(
 recite_wordList.push({
   word: currentWord.value.word,
   soundmark: currentWord.value.soundmark,
-  translation: currentWord.value.translation
+  translation: currentWord.value.translation,
+  id: currentWord.value.id
 })
 function beginRecite() {
   router.push('/user/recite')
@@ -78,14 +80,16 @@ function nextWord() {
     const word = currentWord.value.word
     const soundmark = currentWord.value.soundmark
     const translation = currentWord.value.translation
+    const id = currentWord.value.id
     if (
       recite_wordList.indexOf({
         word: currentWord.value.word,
         soundmark: currentWord.value.soundmark,
-        translation: currentWord.value.translation
+        translation: currentWord.value.translation,
+        id: currentWord.value.id
       }) !== 1
     )
-      recite_wordList.push({ word, soundmark, translation })
+      recite_wordList.push({ word, soundmark, translation, id })
   }
 }
 function prevWord() {

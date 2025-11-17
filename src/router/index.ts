@@ -14,6 +14,7 @@ import Reading_ from '@/pages/user/views/reading_.vue'
 import Recite_ from '@/pages/user/views/recite_.vue'
 import More_reading from '@/pages/user/views/more_reading.vue'
 import Personal_center from '@/pages/user/views/personal_center.vue'
+import Review_ from '@/pages/user/views/review_.vue'
 // import MyAdmin from '@/pages/admin/my-admin.vue'
 const router = createRouter({
   history: createWebHistory(),
@@ -36,7 +37,8 @@ const router = createRouter({
         { path: 'reading', component: Reading_, meta: { title: '阅读' } },
         { path: 'recite', component: Recite_, meta: { title: '背诵' } },
         { path: 'more_reading', component: More_reading, meta: { title: '文章合集' } },
-        { path: 'personal_center', component: Personal_center, meta: { title: '个人中心' } }
+        { path: 'personal_center', component: Personal_center, meta: { title: '个人中心' } },
+        { path: 'review', component: Review_, meta: { title: '复习' } }
       ]
     },
     {
