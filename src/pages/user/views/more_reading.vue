@@ -4,7 +4,7 @@
     <div v-else>
       <div class="content" v-if="haveStorys">
         <dl v-for="item in storys" :key="item.id">
-          <RouterLink to="/user/reading_" :currentStory="item">
+          <RouterLink to="/user/reading" :currentStory="item">
             <dt>{{ item.title }}</dt>
             <dd>{{ item.story[30] }}...</dd>
           </RouterLink>

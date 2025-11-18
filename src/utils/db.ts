@@ -35,8 +35,7 @@ class Database {
   //初始化
   async init(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
-      indexedDB = window.indexedDB
-      const request = indexedDB.open(this.dbName, this.version)
+      const request = window.indexedDB.open(this.dbName, this.version)
       request.onerror = () => reject(request.error)
       request.onsuccess = () => {
         this.db = request.result

@@ -75,7 +75,7 @@ import storysDB from '@/utils/storyDB'
 import storysJSON from '@/data/story.json'
 import wordsJSON from '@/data/dictionary_CET6.json'
 import { ElMessageBox } from 'element-plus'
-const { recite_wordList, set_learnedDailyWords } = useWordStore()
+const { recite_wordList, set_learnedDailyWords, words } = useWordStore()
 const istrue = ref(true)
 const reciteIndex = ref(0)
 const loading = ref(false)
@@ -139,6 +139,10 @@ async function setWord() {
     if (currentWord) {
       await wordsDB.saveWord(currentWord)
       set_learnedDailyWords(currentWord)
+      Object.assign(
+        words,
+        words.filter((word) => word.id !== currentWord.id)
+      )
       console.log('单词保存成功:', currentWord.word)
     }
   } catch (error) {

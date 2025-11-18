@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="left-top">
+    <div v-if="loading">加载中...</div>
+    <div v-else class="left-top">
       <h2>学习进度</h2>
       <h3>
         <span>当前词典：<span class="cidian">英语六级词典</span></span
@@ -18,7 +19,14 @@
     </div>
     <div class="left-bottom">
       <h2>阅读文章</h2>
-      <p>暂无</p>
+      <div v-if="faceStorys.filter((story) => story === defaultStory).length < 5">
+        <p v-for="(story, id) in faceStorys" :key="id">
+          <RouterLink to="/user/reading" :currentStory="story">{{ story.title }}</RouterLink>
+        </p>
+      </div>
+      <div v-else>
+        <p>暂无</p>
+      </div>
       <div>
         <RouterLink to="/user/more_reading"
           ><span>查看更多</span><span class="iconfont icon-zhankai"></span
@@ -28,55 +36,99 @@
   </div>
 </template>
 <script setup lang="ts" name="Usebanner">
+interface story {
+  id: number
+  words: string | Array<string>
+  title: string
+  story: string
+  title_translation: string
+  translation: string
+}
 import { useWordStore } from '@/store/dataStore'
-import { reactive, ref } from 'vue'
+import { reactive, ref, nextTick } from 'vue'
 import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import wordsDB from '@/utils/db'
 import storysDB from '@/utils/storyDB'
 // const { words } = useWordStore()
 // const { storys } = useStoryStore()
+const loading = ref(true)
 localStorage.setItem('date', JSON.stringify(new Date().toISOString().split('T')[0]))
 const today = new Date().toISOString().split('T')[0]
 const date = localStorage.getItem('date')
 const { words, dailyGoal, learnedDailyWords, clear_learnedDailyWords } = useWordStore()
-const defaultWord = {
-  id: '',
-  word: ''
-}
+// const defaultWord = {
+//   id: '',
+//   word: '',
+//   translation: ''
+// }
+const defaultStory = reactive<story>({
+  id: 0,
+  words: '',
+  title: '',
+  story: '',
+  title_translation: '',
+  translation: ''
+})
+const faceStorys = reactive<Array<story>>([
+  defaultStory,
+  defaultStory,
+  defaultStory,
+  defaultStory,
+  defaultStory
+])
+const progressHad = ref(0)
 async function useStoryDB() {
-  const storysAll = storysDB.getAllStorys()
-  const faceStorys = ref([])
-  for (let i = 0; i < 5; i++) {
-    faceStorys.value.push(storysAll[i])
+  await wordsDB.init()
+  const storysAll: Array<story> = await storysDB.getAllStorys()
+  if (storysAll.length > 0)
+    for (let i = 0; i < 5; i++) {
+      if (storysAll[i]) faceStorys[i] = storysAll[i] || defaultStory
+    }
+  if (faceStorys.filter((story) => story === defaultStory).length < 5) {
+    Object.assign(
+      faceStorys,
+      faceStorys.filter((story) => story !== defaultStory)
+    )
   }
+  // faceStorys.forEach((story) =>
+  //   console.log(story, '///', defaultStory, '///', story == defaultStory)
+  // )
+  // console.log(faceStorys.filter((story) => story === defaultStory).length)
 }
-const progressHad = ref()
 async function useDB() {
   await wordsDB.init()
-  wordsDB.saveWord(words[0] || defaultWord)
+  // wordsDB.saveWord(words[0] || defaultWord)
   const learnedWords = await wordsDB.getAllWords()
   if (date !== today || date === null) {
     localStorage.setItem('date', JSON.stringify(today))
     clear_learnedDailyWords()
   }
   progressHad.value = learnedWords.length
-  const phb = document.querySelector('.progress-had-bar')
-  const dphb = document.querySelector('.daily-progress-had-bar')
-  if (phb instanceof HTMLElement) {
-    const width = progressHad.value / words.length
-    console.log(progressHad.value)
-    console.log(words.length)
-    console.log(width)
+  await nextTick()
+  const phb = document.querySelector('.progress-had-bar') as HTMLElement
+  const dphb = document.querySelector('.daily-progress-had-bar') as HTMLElement
+  if (phb) {
+    const width = Math.min((progressHad.value / words.length) * 100, 100)
+    console.log(`总进度为：${progressHad.value * 100}/${words.length}%`)
     phb.style.width = `${width}%`
   }
-  if (dphb instanceof HTMLElement) {
-    const width = (learnedDailyWords.length / dailyGoal) * 100
+
+  if (dphb) {
+    const width = Math.min((learnedDailyWords.length / dailyGoal) * 100, 100)
+    console.log(`日进度为：${learnedDailyWords.length * 100}/${dailyGoal}%`)
     dphb.style.width = `${width}%`
   }
 }
 onMounted(() => {
-  useDB()
+  try {
+    useDB()
+    useStoryDB()
+  } catch (error) {
+    console.error('初始化失败', error)
+  } finally {
+    loading.value = false
+  }
 })
 </script>
 <style scoped>
@@ -136,5 +188,9 @@ div {
 .container .left-bottom span {
   color: rgb(101, 101, 101);
   font-size: smaller;
+}
+.container .left-bottom p {
+  margin: 8px 0;
+  text-align: left;
 }
 </style>

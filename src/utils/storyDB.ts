@@ -10,15 +10,27 @@ class Database {
   db: IDBDatabase | null
   dbName: string
   version: number
+  private initPromise: Promise<IDBDatabase> | null = null
   constructor() {
     this.db = null
     this.dbName = 'storyDB'
     this.version = 1
   }
-  async init() {
+  private async ensureInitialized(): Promise<IDBDatabase> {
+    if (this.db) return this.db
+    if (this.initPromise) return this.initPromise
+    this.initPromise = this.init()
+    try {
+      const db = await this.initPromise
+      return db
+    } catch (error) {
+      this.initPromise = null
+      throw error
+    }
+  }
+  async init(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
-      indexedDB = window.indexedDB
-      const request = indexedDB.open(this.dbName, this.version)
+      const request = window.indexedDB.open(this.dbName, this.version)
       request.onerror = () => reject(request.error)
       request.onsuccess = () => {
         this.db = request.result
@@ -38,6 +50,7 @@ class Database {
     })
   }
   async addStory(story: story) {
+    await this.ensureInitialized()
     const store = this.db!.transaction(['storys'], 'readwrite').objectStore('storys')
     return new Promise((resolve, reject) => {
       const request = store.add(story)
@@ -46,6 +59,7 @@ class Database {
     })
   }
   async getStoryById(id: number): Promise<story | undefined> {
+    await this.ensureInitialized()
     const store = this.db!.transaction(['storys'], 'readonly').objectStore('storys')
     return new Promise((resolve, reject) => {
       const request = store.get(id)
@@ -54,6 +68,7 @@ class Database {
     })
   }
   async getAllStorys(): Promise<story[]> {
+    await this.ensureInitialized()
     return new Promise((resolve, reject) => {
       const store = this.db!.transaction(['storys'], 'readonly').objectStore('storys')
       const list: story[] = []
@@ -75,6 +90,7 @@ class Database {
     })
   }
   async getStorysByPage(page: number, pageSize: number) {
+    await this.ensureInitialized()
     return new Promise((resolve, reject) => {
       const store = this.db!.transaction(['storys'], 'readonly').objectStore('storys')
       let counter = 0

@@ -43,6 +43,7 @@ const router = createRouter({
     },
     {
       path: '/admin',
+      redirect: '/admin/console',
       component: admin_,
       meta: {
         title: '管理中心',

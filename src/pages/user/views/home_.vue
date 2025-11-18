@@ -13,16 +13,61 @@
           ><h2><span class="iconfont icon-ai23"></span>开始今日学习</h2>
         </RouterLink>
       </div>
-      <div class="review">
-        <RouterLink to="/user/review"
+      <!-- <div class="review">
+        <RouterLink to="/user/review" :onclick="flag"
           ><h2><span class="iconfont icon-danxunhuan"></span>复习！</h2></RouterLink
         >
+      </div> -->
+      <div class="review" @click="handleReview">
+        <h2><span class="iconfont icon-danxunhuan"></span>复习！</h2>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts" name="home_">
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import wordsDB from '@/utils/db'
+import { onMounted } from 'vue'
+// async function flag(event: Event) {
+//   const reviewWords = await wordsDB.getTodayReviewWords()
+//   if (reviewWords instanceof Array) {
+//     if (reviewWords.length === 0) {
+//       event.preventDefault()
+//       ElMessage.error('当前没有需要复习的单词！')
+//     }
+//   } else {
+//     console.log('从数据库获取的复习单词不是数组')
+//   }
+// }
+const router = useRouter()
+async function handleReview() {
+  try {
+    const reviewWords = await wordsDB.getTodayReviewWords()
+    if (reviewWords instanceof Array) {
+      if (reviewWords.length === 0) {
+        ElMessage.error('当前没有需要复习的单词！')
+        return // 直接返回，不进行跳转
+      } else {
+        // 有复习单词时进行跳转
+        router.push('/user/review')
+      }
+    } else {
+      console.log('从数据库获取的复习单词不是数组')
+      ElMessage.error('数据加载失败，请重试！')
+    }
+  } catch (error) {
+    console.error('检查复习单词失败', error)
+    ElMessage.error('检查复习单词失败，请重试！')
+  }
+}
+onMounted(async () => {
+  try {
+    await wordsDB.init()
+  } catch (error) {
+    console.error('初始化单词数据库失败', error)
+  }
+})
 </script>
 <style scoped>
 .container {
@@ -67,6 +112,7 @@ import { RouterLink } from 'vue-router'
   margin: 1% auto;
   line-height: 420%;
   transition: all 0.3s;
+  cursor: pointer;
 }
 .main .icon-danxunhuan,
 .main .icon-ai23 {
