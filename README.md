@@ -40,7 +40,8 @@
   - ![76372618252](C:\Users\29986\AppData\Local\Temp\1763726182524.png)
   - ![76372619275](C:\Users\29986\AppData\Local\Temp\1763726192756.png)
   - ![76372620371](C:\Users\29986\AppData\Local\Temp\1763726203711.png)
-  - ![76372621581](C:\Users\29986\AppData\Local\Temp\1763726215815.png)
+  - <img width="1899" height="882" alt="4a3daece-7f7e-4293-a2d2-dcd38010e8b9" src="https://github.com/user-attachments/assets/9bf1d9b7-f57b-48e7-a853-22a004b9d908" />
+
 
 ## 项目功能
 
