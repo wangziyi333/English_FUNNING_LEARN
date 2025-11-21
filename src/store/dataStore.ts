@@ -41,7 +41,8 @@ export const useWordStore = defineStore('word', {
       learnedDailyWords: [] as words[]
     }
   },
-  getters: {}
+  getters: {},
+  persist: true
 })
 export const useStoryStore = defineStore('story', {
   actions: {},
