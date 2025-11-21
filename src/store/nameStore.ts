@@ -21,5 +21,6 @@ export const useNameStore = defineStore('name', {
       data_management: '数据管理'
     }
   },
-  getters: {}
+  getters: {},
+  persist: true
 })

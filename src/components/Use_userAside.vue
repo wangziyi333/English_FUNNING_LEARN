@@ -20,7 +20,7 @@
     <div class="left-bottom">
       <h2>阅读文章</h2>
       <div v-if="faceStorys.filter((story) => story === defaultStory).length < 5">
-        <p v-for="(story, id) in faceStorys" :key="id">
+        <p v-for="(story, id) in faceStorys" :key="id" @click="changeCurrentStory(story)">
           <RouterLink to="/user/reading" :currentStory="story">{{ story.title }}</RouterLink>
         </p>
       </div>
@@ -44,6 +44,7 @@ interface story {
   title_translation: string
   translation: string
 }
+import { useStoryStore } from '@/store/dataStore'
 import { useWordStore } from '@/store/dataStore'
 import { reactive, ref, nextTick } from 'vue'
 import { onMounted } from 'vue'
@@ -52,6 +53,7 @@ import wordsDB from '@/utils/db'
 import storysDB from '@/utils/storyDB'
 // const { words } = useWordStore()
 // const { storys } = useStoryStore()
+const changeCurrentStory = useStoryStore().changeCurrentStory
 const loading = ref(true)
 localStorage.setItem('date', JSON.stringify(new Date().toISOString().split('T')[0]))
 const today = new Date().toISOString().split('T')[0]

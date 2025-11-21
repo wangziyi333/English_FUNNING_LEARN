@@ -3,9 +3,25 @@ import dictionary from '@/data/dictionary_CET6.json'
 import allStorys from '@/data/story.json'
 import type { Word } from '@/types/index'
 import { ref } from 'vue'
+interface story {
+  id: number
+  words: string | Array<string>
+  title: string
+  story: string
+  title_translation: string
+  translation: string
+}
 const words = dictionary.words
 const storys = allStorys.storys
 const dailyGoal = ref(10)
+const currentStory = ref<story>({
+  id: 0,
+  words: '',
+  title: '',
+  story: '',
+  title_translation: '',
+  translation: ''
+})
 type recite = {
   id: number | string
   word: string
@@ -47,7 +63,8 @@ export const useWordStore = defineStore('word', {
 export const useStoryStore = defineStore('story', {
   actions: {},
   state() {
-    return storys
+    return { storys, currentStory }
   },
-  getters: {}
+  getters: {},
+  persist: true
 })

@@ -3,11 +3,13 @@
     <div class="loading" v-if="loading">加载中...</div>
     <div v-else>
       <div class="content" v-if="haveStorys">
-        <dl v-for="item in storys" :key="item.id">
-          <RouterLink to="/user/reading" :currentStory="item">
-            <dt>{{ item.title }}</dt>
-            <dd>{{ item.story[30] }}...</dd>
-          </RouterLink>
+        <dl>
+          <span v-for="item in storys" :key="item.id" @click="changeCurrentStory(item)">
+            <RouterLink to="/user/reading">
+              <dt>{{ item.title }}</dt>
+              <dd>{{ item.story[30] }}...</dd>
+            </RouterLink>
+          </span>
         </dl>
       </div>
       <div class="content" v-else>暂无文章</div>
@@ -36,6 +38,8 @@ interface story {
 import { ref, reactive, onMounted } from 'vue'
 import storyDB from '@/utils/storyDB'
 import { RouterLink } from 'vue-router'
+import { useStoryStore } from '@/store/dataStore'
+const changeCurrentStory = useStoryStore().changeCurrentStory
 const storys: Array<story> = reactive([
   { id: 0, words: [], title: '', title_translation: '', story: '', translation: '' }
 ])
